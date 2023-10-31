@@ -5,7 +5,7 @@
 	<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 	<!-- script de AR.JS con soporte de marker + location -->
 	<script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
-	<script src="gesture-detector.js"></script>
+        <script src="gesture-detector.js"></script>
 	<script src="gesture-handler.js"></script>
 	</head>
 	
@@ -13,61 +13,59 @@
 	
 		<a-scene embedded arjs="sourceType: webcam; DebugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
 		renderer="logaritthmiDepthBuffer: true;"
-		vr-mode-ui="enables:false" gesture-detector id="secene">
+		vr-mode-ui="enables:false" gesture-detector id="scene">
       
-      <a-assets>
+		<a-assets>
         
          <a-asset-item id="orchid" src="https://cdn.glitch.global/18425b32-fbee-4fdf-859a-d613aaf451f1/orchid.glb?v=1697549279587"></a-asset-item>
          <a-asset-item id="flower" src="https://cdn.glitch.global/18425b32-fbee-4fdf-859a-d613aaf451f1/rosa.glb?v=1697635741918"></a-asset-item>
-	 <audio id="sound" src="sonido.mp3" preload="auto"></audio>    
-	 <audio id="sound" src="sonido2.mp3" preload="auto"></audio>  
-     
-      </a-assets>
-		
-      <a-marker id="flores" type="barcode" value="12">		
+         <audio id="sound" src="sonido.mp3" preload="auto"></audio> 
+	 <audio id="sound2" src="sonido2.mp3" preload="auto"></audio> 
+
+		</a-assets>
+			<a-marker id="orquidea" type="barcode" value="12">		
           <a-entity     
-                gltf-model="#orchid" scale="0.09 0.09 0.09" rotation="40 85 40" position="-0.5 0 0"
-		class="clickable" gesture-handler soundhandler>
+                gltf-model="#orchid" scale="0.09 0.09 0.09" rotation="40 85 40" position="0 0 0"
+				class="clickable" gesture-handler soundhandler>
           </a-entity>
       </a-marker>
       
-      <a-marker id="rosa" type="barcode" value="20">		
+      <a-marker id="rosa" type="barcode" value="20" >		
           <a-entity
                 gltf-model="#flower" 
                 scale="4 4 4"
-                rotation="180 90 -90"
-                position="0.7 0 0"
-		  class="clickable" gesture-handler soundhandler>
+                rotation="180 90 90"
+                position="0 0 0"
+				class="clickable" gesture-handler soundhandler>
           </a-entity>
       </a-marker>
-      <a-entity sound="src: #sound" autoplay="false"></a-entity>
+		<a-entity camera></a-entity>
+		<a-entity id="audio" sound="src: #sound" autoplay="false"></a-entity>
+		<a-entity id="audio2" sound="src: #sound2" autoplay="false"></a-entity>
 			
-			<a-entity camera></a-entity>
-			
-		</a-scene>
-
+		</a-scene>s
+		
 		<script>
-AFRAME.registerComponent('soundhandler', {
-tick: function () {
-var entity = document.querySelector('#audio1');
-var entity2 = document.querySelector('#audio2');
-
-
-if (document.querySelector('#delfin').object3D.visible == true) {
-entity2.components.sound.pauseSound();
-entity.components.sound.playSound();
-
-} else if (document.querySelector('#coco').object3D.visible == true) {
-entity.components.sound.pauseSound();
- entity2.components.sound.playSound();
-
-}else{
-entity.components.sound.pauseSound();
-entity2.components.sound.pauseSound();
- }
-}
-});
-</script>
+			AFRAME.registerComponent('soundhandler', {
+				tick: function () {
+					   var entity = document.querySelector('#audio');
+					   var entity2 = document.querySelector('#audio2');
+					
+					 if (document.querySelector('#orquidea').object3D.visible == true) {
+						entity2.components.sound.pauseSound();
+						entity.components.sound.playSound();
+						 
+					} else if (document.querySelector('#rosa').object3D.visible == true) {
+						entity.components.sound.pauseSound();
+						entity2.components.sound.playSound();
+						 
+				  	} else{
+						entity.components.sound.pauseSound();
+						entity2.components.sound.pauseSound();
+					}
+				 }
+			});
+		</script>
 		
 	</body>
 </html>
